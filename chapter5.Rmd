@@ -1,0 +1,147 @@
+---
+title: "chapter5-plot"
+output: html_notebook
+---
+고수준 그래프함수
+- plot
+- xyplot
+- boxplot
+- hist
+- curve
+- coplot
+
+```{r}
+data(mtcars)
+
+plot(mtcars) #pairs()
+plot(mtcars$mpg) 
+plot(mpg ~ disp, data=mtcars) #xyplot()
+plot(mpg ~ factor(am), data=mtcars) #boxplot()
+coplot(mpg ~ disp | factor(am), data=mtcars) #3개의 변수 관계
+
+methods(plot) #plot 의 다형성 보기
+```
+
+제목
+- main
+- xlab, ylab
+
+축설정
+- xlim, ylim
+
+모양, 색설정
+- type(p, l, b, c, n 등)
+- pch(점 모양)
+- cex(점 크기)
+- col(점 테두리 색)
+- bg(점 내부 색)
+
+저수준 그래픽 함수 추가
+- 제목 : title()
+- 범례 : legend(location, legend), mtext()
+- 축 : axis(side(축 위치)=, at=, labels=, line=)
+- 점 : points(x, y, pch(점 모양)=, cex(점 크기)= )
+- 선 : lines(x, y, lty(전 종류)=, lwd=, col=)
+      abline(a, b) y=a+b*x 인  선
+      grid(nx(가로줄 수)=, ny(세로줄 수)= )
+      segments()
+- 텍스트 : text(x, y, labels= , cex=, pos(상하좌우)= )
+          mtext()
+- 도형 : polygon()
+- 수학식 : expression() --> demo(plotmath)를 참고
+
+저장
+- jpeg(), pdf()
+
+화면분할
+- mfrow(), layout()
+
+
+```{r}
+par(mfrow=c(2,2))
+plot(1:10, main="default(type=\"p\")") #점
+plot(1:10, type="l", main="default(type=\"l\")") #선 
+plot(1:10, type="b", main="default(type=\"b\")") #둘다
+plot(1:10, type="n", main="default(type=\"n\")") #빈칸
+par(mfrow=c(1,1))
+```
+
+```{r}
+#그래프의 중첩
+#1 add=TRUE
+plot(sin, -pi, pi, ylab="y")
+plot(cos, -pi, pi, add=TRUE, lty="dotted", col="red")
+legend(0, -0.5, legend=c("sin","cos"), lty=1:2, col=1:2)
+
+#2 par(new=TRUE)
+F= function(x,a) {1/(1+exp(-a-x))}
+curve(F(x,-1), col=1, xlim=c(-5,5), ylim=c(0,1), ylab="f(x)")
+par(new=TRUE)
+curve(F(x,1), col=2, xlim=c(-5,5), ylim=c(0,1), ylab="", axes=FALSE, lty=2)
+title(main=expression(f(x)==frac(1, 1+exp(-a-x))))
+
+
+```
+
+
+```{r}
+#저장
+help(Devices)
+png(filename="myplot1.png", width=480, height=480, units="px")
+plot(mpg~disp, data=mtcars)
+dev.off()
+```
+
+```{r}
+#그림 배열의 미세 조절
+#fig를 사용
+opar <- par(no.readonly = T)
+par(fig = c(0, 0.8, 0, 0.8))
+plot(mtcars$wt, mtcars$mpg, xlab = "miles per gallon", ylab="car weight")
+par(fig = c(0, 0.8, 0.55, 1), new=TRUE)
+boxplot(mtcars$wt, horizontal=TRUE, axes=FALSE)
+par(fig = c(0.65, 1, 0, 0.8), new=TRUE)
+boxplot(mtcars$mpg, axes=FALSE)
+mtext("enhanced scatterplot", side=3, outer=TRUE, line=-3)
+par(opar)
+```
+
+
+```{r histogram}
+hist(acs$BMI)
+hist(acs$BMI, breaks=20, col="red", 
+     main="Distribution", xlab=expression(BMI(kg/m^2)))
+
+hist(acs$BMI, breaks=20, col="red", freq=FALSE, 
+     main="Distribution", xlab=expression(BMI(kg/m^2)))
+rug(acs$BMI)
+lines(density(acs$BMI, na.rm=TRUE), col="blue", lwd=2)
+```
+
+```{r Kernel density plots}
+par(mfrow = c(2,1))
+d=density(acs$BMI, na.rm=T)
+plot(d)
+plot(d, main="Kernel Density of BMI")
+polygon(d, col="red", border = "blue", lwd=2)
+rug(acs$BMI, col="black")
+par(mfrow=c(1,1))
+
+dm=density(acs$weight[acs$sex=="Male"], na.rm=T)
+df=density(acs$weight[acs$sex=="Female"], na.rm=T)
+plot(df, col="blue", lty=1)
+lines(dm, col="red", lty=2)
+legend("topright", legend=c("Male", "Female"), col=c("red", "blue"), lty=c(2,1))
+```
+
+
+```{r boxplot}
+boxplot(acs$BMI, col="red")
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

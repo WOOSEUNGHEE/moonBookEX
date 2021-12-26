@@ -1,0 +1,91 @@
+---
+title: "chapter4-function"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+mypower01 = function(x)
+{
+  result= c(x^3)
+  return(result)
+}
+mypower01(3)
+mypower01("a")
+```
+
+```{r}
+mypower02 = function(x)
+{
+  if(is.numeric(x))
+  {
+    result=c(x^3)
+  }
+  else
+  {
+    result=NA
+  }
+  result
+}
+mypower02(3)
+mypower02("a")
+
+x=c(2,3,4)
+mypower02(x)
+```
+
+```{r}
+mypower03=function(x)
+{
+  ifelse(is.numeric(x), c(x^3), NA)
+}
+mypower03(3)
+mypower03(x)
+```
+```{r}
+myfact=function(x)
+{
+  result=1
+  for (i in 1:x)
+  {
+    result=result*i
+  }
+  result
+}
+myfact(5)
+```
+```{r}
+i=1
+while(i<5)
+{
+  i = i+1
+}
+i
+
+i=1
+while(1)
+{
+  if(i==5) break
+  i = i+1
+}
+i
+
+oddSum=0
+for(i in 1:100)
+{
+  if(i%%2 == 0) next
+  oddSum=oddSum+i
+}
+oddSum
+```
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

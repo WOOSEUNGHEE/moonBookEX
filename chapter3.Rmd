@@ -1,0 +1,64 @@
+---
+title: "chapter3"
+output: html_notebook
+---
+
+기본 연산, 생성 등
+
+seq(begin, end, step)
+structure : 구조를 보는 함수, mode : 자료형
+
+```{r 자료생성성}
+# 나머지 : %%
+
+a <- c(1,2,3)
+str(a)
+mode(a)
+length(a)
+
+seq(1, 3, 0.25)
+b = rep('x', 3)
+
+#as.numeric, as.character, as.logical
+
+sex=c("Male", "Female", "Male")
+sex=as.factor(sex)
+str(sex)
+levels(sex)
+
+```
+[데이터구조]
+
+벡터(vector)
+행렬(matrix) / 배열(array)-다차원
+리스트(list) - 서로 다른 유형의 데이터로 구성된 데이터 객체
+데이터프레임(data.frame) - 2차원에 여러가지 자료형을 담을 수 있음
+범주형 자료(categorical variable)
+시계열(time series)
+Tibble
+
+```{r matrix}
+b=LETTERS[1:12]
+b=matrix(b, ncol=4, byrow=FALSE)
+length(b) #행렬전체 원소 갯수
+nrow(b) 
+ncol(b)
+```
+
+
+```{r dataframe}
+data(acs)
+str(acs)
+acs[2] #데이터프레임
+acs[[2]]; acs[,2]; acs$sex #벡터
+
+#새로운 열 추가
+acs$BMI2 = acs$weight/(acs$height)^2*10000
+head(acs)
+ncol(acs)
+```
+
+str()
+summary()
+head()
+tail()

@@ -1,0 +1,23 @@
+---
+title: "NA, NULL"
+output: html_notebook
+---
+
+chapter3의 일부
+
+```{r NA(Not avaliable), NULL(정의되지 않음)}
+a=as.numeric("KIM")
+(a=c())
+#NA가 있을 경우 평균 등은 계산할 수 없으므로 Error를 내게 되며, 계산하려면 na.rm=TRUE 옵션을 주어야함
+
+a=c(1,2,3,NA)
+mean(a)
+m1 <- mean(a, na.rm=T)
+m2 <- mean(a[!is.na(a)]) #m1=m2s
+sum(is.na(a))
+
+(a=c(1,2,3,NULL))
+(a=NULL)
+
+#na.omit() : NA가 있는 행을 삭제
+```
