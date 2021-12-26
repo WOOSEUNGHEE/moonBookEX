@@ -1,0 +1,35 @@
+---
+title: "chapter1,2"
+output: html_notebook
+---
+
+overview of R
+moonBook, mytable 맛보기
+```{r}
+iris
+str(iris)
+head(iris)
+rownames(mtcars)
+```
+
+```{r moonBook}
+install.packages("moonBook")
+require(moonBook)
+```
+
+```{r mytable}
+data(acs)
+mytable(Dx~ . , data=acs)
+mytable(sex+Dx~ . , data=acs)
+out=mytable(Dx~., data=acs) ; mylatex(out)
+mycsv(out, file="test1.csv")
+#myhtml(out) # 이건뭐지
+
+data(radial)
+mytable(sex ~ age+weight+TC+hsCRP, data=radial, method=3)
+#method1 : 정규분포 ㅇ
+#method2 : 정규분포 ㄴ (중앙값, IQR)
+#method3 : 정규성 검정 (<5000개 : Shapiro-Wilk / >5000개 : Anderson-Daring)
+`````
+
+
